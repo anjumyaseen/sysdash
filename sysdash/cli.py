@@ -42,12 +42,10 @@ def main() -> None:
     if args.json_out:
         _write_json(args.json_out, data, pretty=True)
     if args.html_out:
-        html = render_html(data, template_path=str(Path(__file__).resolve().parent.parent / "templates" / "report_template.html"))
+        tpl = Path(__file__).resolve().parent.parent / "templates" / "report_template.html"
+        html = render_html(data, template_path=str(tpl))
         _write_text(args.html_out, html)
 
     # Default console behavior
     if not args.json_out and not args.html_out:
-        if args.pretty:
-            print(json.dumps(data, indent=2))
-        else:
-            print(json.dumps(data))
+        print(json.dumps(data, indent=2 if args.pretty else None))
