@@ -8,10 +8,15 @@ Exports **JSON** and **HTML** reports.
 
 ## Install
 ```bash
+cd sysdash   # repo root
 python -m venv .venv
-# Windows: .venv\Scripts\activate
-# Unix/macOS:
-. .venv/bin/activate
+# activate
+# Windows:
+.venv\Scripts\activate
+# macOS/Linux:
+source .venv/bin/activate
+
+# install in editable mode
 pip install -e .
 ```
 ## Usage

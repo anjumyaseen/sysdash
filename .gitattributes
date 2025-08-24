@@ -1,0 +1,3 @@
+# Keep YAML workflows with LF on all platforms
+*.yml text eol=lf
+*.yaml text eol=lf

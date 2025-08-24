@@ -9,11 +9,37 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: pip install -e .
-      - name: smoke test
+
+      # Force LF line endings for this checkout to avoid bash $'\r' errors
+      - name: Normalize line endings
+        shell: bash
         run: |
-          sysdash --version
-          sysdash --top 1 --interval 0.2 --pretty | head -n 50
+          git config --global core.autocrlf input
+          find . -type f -name "*.yml" -print0 | xargs -0 sed -i 's/\r$//'
+
+      - name: Install package
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      # Smoke test via python -m to avoid PATH issues with entrypoints
+      - name: Import + collect (no processes)
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from sysdash.collector import collect
+          d = collect(include_procs=False, top_n=0)
+          print(json.dumps({"ok": True, "cpu_logical": d["cpu"]["logical_cores"]}))
+          PY
+
+      # Also test the CLI; keep output short
+      - name: CLI smoke test
+        shell: bash
+        run: |
+          python -m sysdash.cli --top 1 --interval 0.2 --pretty | head -n 40
