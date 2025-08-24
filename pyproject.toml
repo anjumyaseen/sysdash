@@ -1,0 +1,21 @@
+[project]
+name = "sysdash"
+version = "0.1.0"
+description = "Cross-platform system health dashboard CLI (CPU/Mem/Disk/Net + top processes) with JSON/HTML export."
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [{name="Anjum Yaseen"}]
+dependencies = [
+  "psutil>=5.9.8"
+]
+
+[project.scripts]
+sysdash = "sysdash.cli:main"
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["sysdash*"]
