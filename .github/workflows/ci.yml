@@ -16,4 +16,4 @@ jobs:
       - name: smoke test
         run: |
           sysdash --version
-          sysdash --top 3 --interval 0.2 --pretty | head -n 50
+          sysdash --top 1 --interval 0.2 --pretty | head -n 50

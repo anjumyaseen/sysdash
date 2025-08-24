@@ -2,14 +2,55 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>{{TITLE}}</title>
+<style>
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; }
+  h1 { margin-bottom: 0; }
+  .subtitle { color: #666; margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+  th, td { border: 1px solid #ddd; padding: 8px; }
+  th { background: #f5f5f5; text-align: left; }
+  .section { margin-top: 24px; }
+  code { background: #f6f8fa; padding: 2px 4px; border-radius: 4px; }
+</style>
 </head>
 <body>
   <h1>System Health Report</h1>
-  <div>{{DATETIME}}</div>
-  <h2>CPU</h2>
-  <p>Load: {{CPU_LOAD}}</p>
-  <p>Cores: {{CPU_CORES}}</p>
-  <p>Per-core: {{CPU_PER_CORE}}</p>
+  <div class="subtitle">{{DATETIME}}</div>
+
+  <div class="section">
+    <h2>CPU</h2>
+    <table>
+      <tr><th>Load</th><td>{{CPU_LOAD}}</td></tr>
+      <tr><th>Cores</th><td>{{CPU_CORES}}</td></tr>
+      <tr><th>Frequency</th><td>{{CPU_FREQ}}</td></tr>
+      <tr><th>Per-Core</th><td><code>{{CPU_PER_CORE}}</code></td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Disks</h2>
+    <table>
+      <thead><tr><th>Device</th><th>Mount</th><th>FS</th><th>Total</th><th>Used</th><th>Free</th><th>%</th></tr></thead>
+      <tbody>{{DISKS_ROWS}}</tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Network</h2>
+    <table>
+      <thead><tr><th>Interface</th><th>Bytes Sent</th><th>Bytes Recv</th><th>Packets Sent</th><th>Packets Recv</th></tr></thead>
+      <tbody>{{NICS_ROWS}}</tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Top Processes</h2>
+    <table>
+      <thead><tr><th>PID</th><th>Name</th><th>User</th><th>CPU%</th><th>Mem%</th><th>RSS</th></tr></thead>
+      <tbody>{{PROCS_ROWS}}</tbody>
+    </table>
+  </div>
 </body>
 </html>
